@@ -1,0 +1,115 @@
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+
+using namespace std;
+
+
+void cargar (int v[],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		cout<<"vec["<<i<<"]="<<endl;
+		cin>>v[i];
+	}
+}
+void mostrar(int v[],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		cout<<v[i]<<"\t";
+	}
+}
+int cantveces(int v[],int n,int x)
+{
+	int c=0;
+	for(int i=0;i<n-1;i++)
+	{
+		if(v[i]==x)
+			c++;
+	}
+	return c;
+}
+int masrepetido(int v[],int n)
+{
+	int may=-99999,x,elem;
+	for(int i=0;i<n;i++)
+	{
+		x=cantveces(v,n,v[i]);
+		if(x>may)
+		{
+			may=x;
+			elem=v[i];
+		}
+	}
+	return elem;
+}
+void invertirsubvec(int v[],int i,int k,int n)
+{
+	int aux;
+	while(i<k)
+	{
+		aux=v[i];
+		v[i]=v[k];
+		v[k]=aux;
+		i++;
+		k--;
+	}
+	mostrar(v,n);
+}
+void eliminar(int v[],int &n,int pos)
+{
+		while(pos<n-1)
+		{
+			v[pos]=v[pos+1];
+			pos++;
+		}
+		n=n-1;
+		mostrar(v,n);
+}
+void insertarposicion(int v[],int &n,int x,int pos)
+{
+	int k=n-1;
+	while(k>=pos)
+	{
+		v[k+1]=v[k];
+		k--;
+	}
+	v[pos]=x;
+	n=n+1;
+}
+
+void insertar(int v[],int &n,int x)
+{
+	int i=0,pos;
+	while(v[i]<x)
+	{
+		pos=i;
+		i++;
+	}
+	insertarposicion(v,n,x,i);
+	mostrar(v,n);
+}
+void invertirdigitos(int v[],int n,int i,int k)
+{
+	int aux;
+	aux=v[i];
+	v[i]=v[k];
+	v[k]=aux;
+	mostrar(v,n);
+}
+void main()
+{
+	int v[30],n,x,i,k;
+	cout<<"Ingrese el tam del vector"<<endl;
+	cin>>n;
+	cargar(v,n);
+	cout<<"Ingrese i"<<endl;
+	cin>>i;
+	cout<<"Ingrese k"<<endl;
+	cin>>k;
+	invertirdigitos(v,n,i,k);
+
+	getch();
+}
+
