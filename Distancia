@@ -1,0 +1,105 @@
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+
+using namespace std;
+
+class distancia
+{
+private:
+	int mt;
+	int cm;
+	int mm;
+public:
+	distancia()
+	{
+	mm=mt=cm=0;
+	}
+	void setMt(int m)
+	{
+		mt=m;
+	}
+	void setCm(int c)
+	{
+		cm=c;
+	}
+	void setMm(int mil)
+	{
+		mm=mil;
+	}
+	int getMt()
+	{
+		return mt;
+	}
+	int getCm()
+	{
+		return cm;
+	}
+	int getMm()
+	{
+		return mm;
+	}
+	void leer();
+	void mostrar();
+	distancia mayor (distancia d2);
+	void aumentarMilimetro(int m);
+};
+void distancia::leer()
+{
+	int m,c,mil;
+	cout<<"Ingrese M:"<<endl;
+	cin>>m;
+	setMt(m);
+	cout<<"Ingrese CM:"<<endl;
+	cin>>c;
+	setCm(c);
+	cout<<"Ingrese MM:"<<endl;
+	cin>>mil;
+	setMm(mil);
+}
+void distancia::mostrar()
+{
+	cout<<mt<<" m ,"<<cm<<" cm ,"<<mm<<" mm";
+}
+distancia distancia::mayor(distancia d2)
+{
+	int d1,d;
+
+	d1=(getMt()*1000)+(getCm()*10)+getMm();
+	d=(d2.getMt()*1000)+(d2.getCm()*10)+d2.getMm();
+	if(d<d1)
+		return *this;
+	else
+		return d2;
+}
+void distancia::aumentarMilimetro(int m)
+{
+	int d,metro,centi,mili;
+	d=(getMt()*1000)+(getCm()*10)+getMm()+m;
+	metro=d/1000;
+	centi=(d%1000)/10;
+	mili=(d%1000)%10;
+	setMt(metro);
+	setCm(centi);
+	setMm(mili);
+}
+void main()
+{
+	distancia d1,d2,d3;
+	int n;
+	d1.leer();
+	cout<<endl;
+	d2.leer();
+	cout<<endl;
+	d3=d1.mayor(d2);
+	cout<<"La mayor distancia sera: "<<endl;
+	d3.mostrar();
+	cout<<endl;
+	cout<<"AUMENTAR MILIMETROS"<<endl;
+	cout<<"Ingrese la cantidad de mm que desea aumentar"<<endl;
+	cin>>n;
+	d1.aumentarMilimetro(n);
+	d1.mostrar();
+
+	getch();
+}
