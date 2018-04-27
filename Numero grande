@@ -1,0 +1,198 @@
+#include "stdafx.h"
+#include "iostream"
+#include "stdlib.h"
+#include "stdio.h"
+#include "conio.h"
+#include "vector.h"
+
+using namespace std;
+
+
+class numerogrande : public vector
+{
+public:
+	void sumar(numerogrande n1,numerogrande n2);
+};
+void numerogrande::sumar(numerogrande n1,numerogrande n2)
+{
+	int i=0,j=0,r=0,s=0;
+	int n=n1.getDim();
+	int m=n2.getDim();
+	while(i<n1.getDim() && j<n2.getDim())
+	{
+		s=n1.getElem(n-1-i)+n2.getElem(m-1-j)+r;
+		i++;
+		j++;
+		if(s>10)
+		{
+			r=s/10;
+			insertarPri(s%10);
+		}
+		else
+		{
+			r=0;
+			insertarPri(s);
+		}
+	}
+	while(i<n1.getDim())
+	{
+		s=n1.getElem(n-1-i)+r;
+		i++;
+		if(s>10)
+		{
+			r=s/10;
+			insertarPri(s%10);
+		}
+		else
+		{
+			r=0;
+			insertarPri(s);
+		}
+	}
+	while( j<n2.getDim())
+	{
+		s=n2.getElem(m-1-j)+r;
+		j++;
+		if(s>10)
+		{
+			r=s/10;
+			insertarPri(s%10);
+		}
+		else
+		{
+			r=0;
+			insertarPri(s);
+		}
+	}
+	if(r>0)
+		insertarPri(r);
+	else
+	{
+	}
+}
+
+
+void main()
+{
+	numerogrande n1,n2,n3;
+	n1.leer();
+	n2.leer();
+	n3.sumar(n1,n2);
+	cout<<endl;
+	n3.imprimir();
+
+	getch();
+}
+
+
+
+
+-----------------------------clase vector----------------------------
+
+#include "stdafx.h"
+#include "iostream"
+#include "stdlib.h"
+#include "stdio.h"
+#include "conio.h"
+
+using namespace std;
+
+void cargar(int v[], int n)
+{
+ int x; 
+ for(int i=0;i<n;i++)
+ {
+	 cout<<"Elemento:";
+	 cin>>x;
+	 v[i]=x;
+ }
+}
+
+void mostrar(int v[], int n)
+{
+ for(int i=0;i<n;i++)
+	 cout<<v[i];
+
+ cout<<endl;
+}
+
+void insertarPosicion(int v[], int &n, int x, int pos)
+{
+ if(pos < 0 || pos > n)
+	 cout<<"Posicion no valida...!!!";
+ else
+ {
+   int k=n-1;
+   while(k>=pos)
+   {
+      v[k+1]=v[k];
+	  k--;
+   }
+   v[pos]=x;
+   n=n+1;
+ }
+}
+
+void insertarUlt(int v[], int &n, int x)
+{
+   insertarPosicion(v,n,x,n); 
+}
+
+void insertarPri(int v[], int &n, int x)
+{
+   insertarPosicion(v,n,x,0); 
+}
+
+//funcion que elimina una posicion del vector
+void eliminarPosicion(int v[], int &n, int pos)
+{
+ if(pos < 0 || pos > n)
+  	cout<<"Posicion no valida...!!!";
+ else
+ {
+    int k=pos + 1;
+    while(k < n)
+    {
+       v[k-1]=v[k];
+	   k++;
+    }	
+    n=n-1;
+ }
+}
+
+void eliminarPri(int v[], int &n)
+{
+   eliminarPosicion(v,n,0); 
+}
+
+void eliminarUlt(int v[], int &n)
+{
+   eliminarPosicion(v,n,n-1); 
+}
+
+//funcion que elimina los elementos pares
+void eliminarPares(int v[], int &n)
+{
+  int i=0;
+  while(i<n)
+  {
+     if(v[i] % 2 == 0)
+		 eliminarPosicion(v,n,i);
+	 else
+		 i++;
+  }  
+}
+//Funcion para que rote segun las manecillas del reloj
+void rotar (int V[], int n, int k)
+{
+	int i=1;
+	while (i<=k)
+	{
+		insertarUlt(V,n,V[0]);
+		eliminarPri(V,n);
+		i++;
+	}
+}
+
+
+
