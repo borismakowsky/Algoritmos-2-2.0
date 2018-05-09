@@ -1,0 +1,239 @@
+---------------VECTOR.CPP--------------------
+
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#include "vector.h"
+
+using namespace std;
+
+class metodos: public vector
+{
+public:
+	int moda();
+	void concatenar(metodos m1,metodos m2);
+	void intercalar(metodos m1,metodos m2);
+};
+int mayor(int aux[],int tam)
+{
+	int may=aux[0];
+	int i;
+	for(i=0;i<tam;i++)
+	{
+		if(may<aux[i])
+			may=aux[i];
+		else
+			may=may;
+	}
+	return may;
+}
+int metodos::moda()
+{
+	int aux[30],c=0,tam=0,moda;
+	for(int i=0;i<getDim()-1;i++)
+	{
+		c=0;
+		for(int j=i+1;j<getDim();j++)
+		{
+			if(getElem(i)==getElem(j))
+				c++;
+		}
+		aux[i]=c;
+		tam++;
+	}
+	moda=mayor(aux,tam);
+	for(int i=0;i<tam;i++)
+	{
+		if(aux[i]==moda)
+			return getElem(i);
+	}
+	
+}
+void metodos::concatenar(metodos m1,metodos m2)
+{
+	int i=0,j=0;
+	while(i<m1.getDim())
+	{
+		insertarUlt(m1.getElem(i));
+		i++;
+	}
+	while(j<m2.getDim())
+	{
+		insertarUlt(m2.getElem(j));
+		j++;
+	}
+
+}
+void metodos:: intercalar(metodos m1,metodos m2)
+{
+	int i=0,j=0;
+	while(i<m1.getDim()&& j<m2.getDim())
+	{
+		insertarUlt(m1.getElem(i));
+		insertarUlt(m2.getElem(j));
+		i++;
+		j++;
+	}
+
+
+	while(i<m1.getDim())
+	{
+		insertarUlt(m1.getElem(i));
+		i++;
+	}
+	while(j<m2.getDim())
+	{
+		insertarUlt(m2.getElem(j));
+		j++;
+	}
+
+}
+void main()
+{
+	metodos m1,m2,m3;
+	int moda;
+	m1.leer();
+	cout<<endl;
+	m1.imprimir();
+	cout<<endl;
+	m2.leer();
+	cout<<endl;
+	m2.imprimir();
+	cout<<endl;
+	m3.intercalar(m1,m2);
+	cout<<endl;
+	m3.imprimir();
+
+
+	getch();
+
+
+}
+
+
+-----------vector.h---------------------
+
+#include "stdafx.h"
+#include "iostream"
+#include "conio.h"
+
+using namespace std;
+
+typedef int tipoElem;
+const int MAX=50;
+
+class vector
+{
+private:
+   tipoElem v[MAX];
+   int n;
+
+public:
+   vector()
+   {
+	  n=0;	  
+   }
+
+void setElem(tipoElem x,int p){
+   v[p]=x;
+}
+
+int getElem(int p){
+  return v[p];
+}
+
+void setDim(int d){
+  n=d;
+}
+
+int getDim(){
+  return n;
+}
+
+void leer();
+
+void imprimir();
+
+bool vacio()
+{ return n==0; }
+
+bool lleno()
+{ return n==MAX; }
+
+void eliminarUlt(int p)
+{ eliminar(n-1); }
+
+void insertar(tipoElem x,int p);
+
+void insertarUlt(tipoElem x)
+{ insertar(x,n); }
+
+void insertarPri(tipoElem x)
+{ insertar(x,0); }
+
+void eliminar(int p);
+
+void eliminarUlt()
+{ eliminar(n-1); }
+
+void eliminarPri()
+{ eliminar(0); }
+
+
+}; //end class
+
+void vector::leer()
+{
+	int m;
+	cout<<"Cantidad elementos:";
+	cin>>m; int x;
+	setDim(m);
+	for(int i=0;i<m;i++){
+	  cout<<"Elem:"; cin>>x;
+	  setElem(x,i);
+	}
+}
+
+void vector::imprimir()
+{
+	for(int i=0;i<getDim();i++) {
+	  cout<<getElem(i)<<"  ";
+	}
+	cout<<endl;
+}
+
+void vector::insertar(tipoElem x, int p){
+
+  if(lleno()){
+     cout<<"Vector lleno...!!!";
+	 return ;
+  }	 
+	int k=n-1;
+	while(k>=p){
+	   v[k+1]=v[k];
+	   k--;
+	}
+	 v[p]=x;
+	 n=n + 1;	
+}
+
+void vector::eliminar(int p){
+  if(p<0 || p >= n) {	  
+	  cout<<"Posicion no valida...!!!";
+	  return ;
+  } 
+  if(vacio()){
+     cout<<"Vector vacio...!!!";
+	 return ;
+  }	 
+	int k=p + 1;
+	while(k < n){
+	   v[k-1]=v[k];
+	   k++;
+	}	 
+	 n=n - 1;	
+}
+
+
+
+
