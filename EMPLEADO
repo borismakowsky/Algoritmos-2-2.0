@@ -1,0 +1,277 @@
+----------------FECHA.H-----------------------
+
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include "string.h"
+
+using namespace std;
+
+const int diaMes[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+class fecha 
+{
+private:
+	int dia ;
+	int mes;
+	int anho;
+public:
+	fecha()
+	{
+		dia=mes=anho=0;
+	}
+	void setDia (int d)
+	{
+		dia=d;
+	}
+	void setMes(int m)
+	{
+		mes=m;
+	}
+	void setAnho(int a)
+	{
+		anho=a;
+	}
+	int getDia()
+	{
+		return dia;
+	}
+	int getMes()
+	{
+		return mes;
+	}
+	int getAnho()
+	{
+		return anho;
+	}
+	void leer();
+	void mostrar();
+	int diferencia(fecha f2);
+};
+void fecha::leer()
+{
+	int d,m,a;
+	cout<<"INGRESE EL DIA :"<<endl;
+	cin>>d;
+	setDia (d);
+	cout<<"INGRESE EL MES: "<<endl;
+	cin>>m;
+	setMes(m);
+	cout<<"INGRESE EL ANHO"<<endl;
+	cin>>a;
+	setAnho(a);
+}
+void fecha::mostrar()
+{
+	cout<<getDia()<<" / "<<getMes()<<" / "<<getAnho();
+}
+int fecha::diferencia(fecha f2)
+{
+	int i=0,d,m,a;
+	d=getDia();
+	m=getMes();
+	a=getAnho();
+
+	while(getDia() != f2.getDia() ||getMes() != f2.getMes() ||getAnho() != f2.getAnho() )
+	{
+		i++;
+		if(dia==diaMes[mes])
+		{
+			if(mes==12)
+			{
+				a=a+1;
+				m=1;
+				d=1;
+			}
+			else
+			{
+				m=m+1;
+				d=1;
+			}
+		}
+		else
+		{
+			d=d+1;
+		}
+		setDia(d);
+		setMes(m);
+		setAnho(a);
+	}
+	return i/365;
+}
+
+------------------PAGOS.H--------------------------
+
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include "string.h"
+
+using namespace std;
+
+class pagos
+{
+private:
+	int idPago;
+	char tipo[30];
+	int sueldo;
+public:
+
+	pagos()
+	{
+		idPago=sueldo=0;
+	}
+	void setIdPago(int i)
+	{
+		idPago=i;
+	}
+	void setTipoPago(char t[])
+	{
+		strcpy(tipo,t);
+	}
+	void setSueldo(int s)
+	{
+		sueldo=s;
+	}
+	int getIdPago()
+	{
+		return idPago;
+	}
+	char* getTipoPago()
+	{
+		return tipo;
+	}
+	int getSueldo()
+	{
+		return sueldo;
+	}
+	void leer();
+	void mostrar();
+};
+void pagos::leer()
+{
+	int i,s;
+	char t[30];
+	cout<<"INGRESE EL ID DEL PAGO"<<endl;
+	cin>>i;
+	setIdPago(i);
+	cin.ignore();
+	cout<<"INGRESE EL TIPO DE SUELDO "<<endl;
+	gets(t);
+	setTipoPago(t);
+	cout<<"INGRESE EL SUELDO DEL EMPLEADO "<<endl;
+	cin>>s;
+	setSueldo(s);
+
+}
+void pagos::mostrar()
+{
+	cout<<"ID		TIPO		SUELDO"<<endl;
+	cout<<getIdPago()<<"		"<<getTipoPago()<<"		"<<getSueldo();
+}
+-----------------EMPLEADO.CPP-------------------
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include "string.h"
+#include "fecha.h"
+#include "pagos.h"
+
+using namespace std;
+
+class empleado
+{
+private:
+	int codigo;
+	char nombre[30];
+	char paterno[30];
+	char materno[30];
+	fecha fechaIngreso;
+public:
+	empleado()
+	{
+		codigo=0;
+	}
+	void setCodigo(int c)
+	{
+		codigo=c;
+	}
+	void setNombre(char nom[])
+	{
+		strcpy(nombre,nom);
+	}
+	void setPaterno(char pat[])
+	{
+		strcpy(paterno,pat);
+	}
+	void setMaterno(char mat[])
+	{
+		strcpy(materno,mat);
+	}
+	int getCodigo()
+	{
+		return codigo;
+	}
+	char* getNombre()
+	{
+		return nombre;
+	}
+	char* getPaterno()
+	{
+		return paterno;
+	}
+	char* getMaterno()
+	{
+		return materno;
+	}
+	void leer();
+	void mostrar();
+};
+void empleado::leer()
+{
+	int c;
+	char n[30],p[30],m[30];
+	cout<<"INGRESE EL CODIGO "<<endl;
+	cin>>c;
+	setCodigo(c);
+	cout<<"INGRESE EL NOMBRE "<<endl;
+	gets(n);
+	setNombre(n);
+	cout<<"INGRESE EL APELLIDO PATERNO "<<endl;
+	gets(p);
+	setPaterno(p);
+	cout<<"INGRESE EL APELLIDO MATERNO "<<endl;
+	gets(m);
+	setMaterno(m);
+}
+void empleado::mostrar()
+{
+	cout<<"CODIGO		NOMBRE		PATERNO		MATERNO		FECHA INGRESO"<<endl;
+	cout<<getCodigo()<<"		"<<getNombre()<<"		"<<getPaterno()<<"		"<<getMaterno()<<"		";cout<<endl;
+}
+void main()
+{
+	pagos p1;
+	fecha f1,hoy;
+	empleado e1;
+	hoy.setDia(10);
+	hoy.setMes(5);
+	hoy.setAnho(2018);
+	int sueldo,dif;
+	cout<<"--------FECHA DE INGRESO--------"<<endl;
+	f1.leer();
+	cout<<"----------DATOS DE PAGO---------"<<endl;
+	p1.leer();
+	dif=f1.diferencia(hoy);
+	if(dif>5)
+		sueldo=p1.getSueldo()*1.1;
+	else
+		sueldo=p1.getSueldo()*1.05;
+	cout<<"----------DETALLE DE PAGO---------"<<endl;
+	p1.mostrar();
+	cout<<endl;
+	cout<<"EL SUELDO SERA: "<<sueldo;
+
+
+	getch();
+
+}
