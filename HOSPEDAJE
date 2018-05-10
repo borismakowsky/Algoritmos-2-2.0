@@ -1,0 +1,317 @@
+----------------FECHA.H-----------------------
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include "string.h"
+
+using namespace std;
+
+const int diaMes[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+class fecha 
+{
+private:
+	int dia ;
+	int mes;
+	int anho;
+public:
+	fecha()
+	{
+		dia=mes=anho=0;
+	}
+	void setDia (int d)
+	{
+		dia=d;
+	}
+	void setMes(int m)
+	{
+		mes=m;
+	}
+	void setAnho(int a)
+	{
+		anho=a;
+	}
+	int getDia()
+	{
+		return dia;
+	}
+	int getMes()
+	{
+		return mes;
+	}
+	int getAnho()
+	{
+		return anho;
+	}
+	void leer();
+	void mostrar();
+	int diferencia(fecha f2);
+};
+void fecha::leer()
+{
+	int d,m,a;
+	cout<<"INGRESE EL DIA :"<<endl;
+	cin>>d;
+	setDia (d);
+	cout<<"INGRESE EL MES: "<<endl;
+	cin>>m;
+	setMes(m);
+	cout<<"INGRESE EL ANHO"<<endl;
+	cin>>a;
+	setAnho(a);
+}
+void fecha::mostrar()
+{
+	cout<<getDia()<<" / "<<getMes()<<" / "<<getAnho();
+}
+int fecha::diferencia(fecha f2)
+{
+	int i=0,d,m,a;
+	d=getDia();
+	m=getMes();
+	a=getAnho();
+
+	while(getDia() != f2.getDia() ||getMes() != f2.getMes() ||getAnho() != f2.getAnho() )
+	{
+		i++;
+		if(dia==diaMes[mes])
+		{
+			if(mes==12)
+			{
+				a=a+1;
+				m=1;
+				d=1;
+			}
+			else
+			{
+				m=m+1;
+				d=1;
+			}
+		}
+		else
+		{
+			d=d+1;
+		}
+		setDia(d);
+		setMes(m);
+		setAnho(a);
+	}
+	return i;
+}
+--------------DEPARTAMENTO.H----------------------
+
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include "string.h"
+
+using namespace std;
+
+const int diaMes[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+class fecha 
+{
+private:
+	int dia ;
+	int mes;
+	int anho;
+public:
+	fecha()
+	{
+		dia=mes=anho=0;
+	}
+	void setDia (int d)
+	{
+		dia=d;
+	}
+	void setMes(int m)
+	{
+		mes=m;
+	}
+	void setAnho(int a)
+	{
+		anho=a;
+	}
+	int getDia()
+	{
+		return dia;
+	}
+	int getMes()
+	{
+		return mes;
+	}
+	int getAnho()
+	{
+		return anho;
+	}
+	void leer();
+	void mostrar();
+	int diferencia(fecha f2);
+};
+void fecha::leer()
+{
+	int d,m,a;
+	cout<<"INGRESE EL DIA :"<<endl;
+	cin>>d;
+	setDia (d);
+	cout<<"INGRESE EL MES: "<<endl;
+	cin>>m;
+	setMes(m);
+	cout<<"INGRESE EL ANHO"<<endl;
+	cin>>a;
+	setAnho(a);
+}
+void fecha::mostrar()
+{
+	cout<<getDia()<<" / "<<getMes()<<" / "<<getAnho();
+}
+int fecha::diferencia(fecha f2)
+{
+	int i=0,d,m,a;
+	d=getDia();
+	m=getMes();
+	a=getAnho();
+
+	while(getDia() != f2.getDia() ||getMes() != f2.getMes() ||getAnho() != f2.getAnho() )
+	{
+		i++;
+		if(dia==diaMes[mes])
+		{
+			if(mes==12)
+			{
+				a=a+1;
+				m=1;
+				d=1;
+			}
+			else
+			{
+				m=m+1;
+				d=1;
+			}
+		}
+		else
+		{
+			d=d+1;
+		}
+		setDia(d);
+		setMes(m);
+		setAnho(a);
+	}
+	return i;
+}
+---------------HOSPEDAJE.CPP------------------
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include "string.h"
+#include "departamento.h"
+#include "fecha.h"
+
+using namespace std;
+
+class hospedaje
+{
+private:
+	int nro;
+	fecha fechaEntrada;
+	fecha fechaSalida;
+	int descuento;
+	int codigo;
+	char nombreCliente[30];
+	int montoTotal;
+public:
+	hospedaje()
+	{
+		nro=descuento=codigo=montoTotal=0;
+	}
+	void setNro(int n)
+	{
+		nro=n;
+	}
+	void setDescuento(int d)
+	{
+		descuento=d;
+	}
+	void setCodigo(int c)
+	{
+		codigo=c;
+	}
+	void setNombreCliente(char nom[])
+	{
+		strcpy(nombreCliente,nom);
+	}
+	void setMontoTotal(int m)
+	{
+		montoTotal=m;
+	}
+	int getNro()
+	{
+		return nro;
+	}
+	int getDescuento()
+	{
+		return descuento;
+	}
+
+	int getCodigo()
+	{
+		return codigo;
+	}
+	char* getNombreCliente()
+	{
+		return nombreCliente;
+	}
+	int getMontoTotal()
+	{
+		return montoTotal;
+	}
+	void guardar();
+	void mostrar();
+};
+void hospedaje::guardar()
+{
+	int n,d,c,nc,mt,dif;
+	char cliente[30];
+	departamento d1;
+	d1.guardar();
+	cout<<endl;
+	cout<<"INGRESE EL NUMERO DE HOSPEDAJE"<<endl;
+	cin>>n;
+	setNro(n);
+	cout<<"INGRESE LA FECHA DE ENTRADA"<<endl;
+	fechaEntrada.leer();
+	cout<<"INGRESE LA FECHA DE SALIDA "<<endl;
+	fechaSalida.leer();
+	cout<<"INGRESE EL DESCUENTO DEL HOSPEDAJE "<<endl;
+	cin>>d;
+	setDescuento(d);
+	cout<<"INGRESE EL CODIGO DE HOSPEDAJE"<<endl;
+	cin>>c;
+	setCodigo(c);
+	cin.ignore();
+	cout<<"INGRESE EL NOMBRE DEL CLIENTE "<<endl;
+	gets(cliente);
+	setNombreCliente(cliente);
+	dif=fechaEntrada.diferencia(fechaSalida);
+	if(d1.buscarPorCodigo(getCodigo()))
+	{
+	montoTotal=(d1.getPrecio()*dif)-((descuento*d1.getPrecio()*dif)/100);
+	setMontoTotal(montoTotal);
+	}
+	else
+		setMontoTotal(0);
+
+}
+void hospedaje::mostrar()
+{
+	cout<<"=========HOSPEDAJE=========="<<endl;
+	cout<<"NRO	||	FECHA ENTRADA	||	FECHA SALIDA	|	DESCUENTO	||	CODIGO	||	NOMBRE	||	MONTO TOTAL"<<endl;
+	cout<<getNro()<<"		";fechaEntrada.mostrar();cout<<"		";fechaSalida.mostrar();cout<<"			"<<getDescuento()<<"			"<<getCodigo()<<"			";cout<<getNombreCliente()<<"			"<<getMontoTotal();
+}
+void main()
+{
+	hospedaje h1;
+	h1.guardar();
+	cout<<endl;
+	h1.mostrar();
+
+	getch();
+}
